@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecuashop | Tu Puente USA - Ecuador</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #0f172a; /* Navy Profundo */
+            --accent: #ef4444; /* Rojo Vibrante */
+            --gold: #d4af37; 
+            --bg: #e0f2fe; /* Azul Cielo Suave Premium */
+            --surface: #ffffff;
+            --text-grey: #475569;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--primary);
+            overflow-x: hidden;
+        }
+
+        /* --- IMÁGENES & LOGOS --- */
+        img { max-width: 100%; display: block; }
+
+        /* Estilo para los logos del carrusel */
+        .brand-logo {
+            height: 50px; /* Altura fija para uniformidad */
+            width: auto;
+            object-fit: contain;
+            /* Filtro Grayscale para elegancia (Quitar si quieres color full) */
+            filter: grayscale(100%); 
+            opacity: 0.6;
+            transition: all 0.3s;
+        }
+        .brand-logo:hover {
+            filter: grayscale(0%);
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        /* --- BOTONES --- */
+        .btn-group { display: flex; gap: 15px; flex-wrap: wrap; margin-top: 30px; }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white; padding: 16px 32px; border-radius: 12px;
+            font-weight: 700; text-decoration: none; transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4); border: none;
+            display: inline-flex; align-items: center; gap: 8px;
+        }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(239, 68, 68, 0.6); }
+
+        .btn-outline {
+            background: transparent; color: var(--primary); border: 2px solid var(--primary);
+            padding: 14px 30px; border-radius: 12px; font-weight: 700; text-decoration: none;
+            transition: all 0.3s;
+        }
+        .btn-outline:hover { background: var(--primary); color: white; }
+
+        .btn-vip {
+            background: var(--primary); color: var(--gold); border: 1px solid var(--gold);
+            padding: 16px 32px; border-radius: 12px; font-weight: 700; text-decoration: none;
+            display: inline-flex; align-items: center; gap: 10px; transition: all 0.3s;
+        }
+        .btn-vip:hover { background: black; box-shadow: 0 5px 20px rgba(212, 175, 55, 0.3); }
+
+        /* --- HEADER OSCURO --- */
+        header {
+            padding: 15px 5%;
+            background: var(--primary);
+            position: fixed; width: 100%; top: 0; z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+        nav ul { display: flex; gap: 30px; list-style: none; }
+        nav a { text-decoration: none; color: white; font-weight: 600; font-size: 0.95rem; transition: color 0.3s; }
+        nav a:hover { color: var(--accent); }
+        nav a.nav-vip { color: var(--gold); }
+
+        /* --- HERO --- */
+        .hero {
+            min-height: 95vh; padding: 140px 5% 50px 5%;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 50px;
+            align-items: center; position: relative;
+        }
+        .hero-text h1 { font-size: 4rem; line-height: 1.1; margin-bottom: 20px; letter-spacing: -1px; }
+        .hero-text p { font-size: 1.2rem; color: var(--text-grey); margin-bottom: 10px; max-width: 90%; }
+        .hero-visual { position: relative; height: 100%; min-height: 500px; }
+        
+        .floating-badge {
+            position: absolute; bottom: 40px; left: -20px;
+            background: white; padding: 20px; border-radius: 15px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            display: flex; gap: 15px; align-items: center; z-index: 2;
+        }
+
+        /* --- CARRUSEL DE MARCAS --- */
+        .brand-carousel-section {
+            padding: 60px 0;
+            background: white;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05) inset;
+        }
+
+        .carousel-header {
+            text-align: center; margin-bottom: 40px; padding: 0 5%;
+            position: relative; z-index: 2;
+        }
+
+        .logo-track {
+            display: flex; gap: 60px; width: max-content;
+            animation: scrollLogos 45s linear infinite; /* Ajustado a 45s por la cantidad de logos */
+        }
+        
+        .logo-track:hover { animation-play-state: paused; }
+
+        @keyframes scrollLogos {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* --- SECCIONES COMUNES --- */
+        .section-std { padding: 80px 5%; }
+        .section-header { text-align: center; margin-bottom: 60px; max-width: 700px; margin-left: auto; margin-right: auto; }
+        .section-header h2 { font-size: 2.5rem; margin-bottom: 15px; }
+
+        .pricing-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .card-box {
+            background: white; padding: 30px; border-radius: 20px; position: relative;
+            border: 1px solid white; transition: transform 0.3s;
+            box-shadow: 0 10px 30px rgba(14, 165, 233, 0.1);
+        }
+        .card-box:hover { transform: translateY(-5px); border-color: var(--primary); }
+
+        .card-box.featured {
+            background: var(--primary); color: white;
+            transform: scale(1.05); box-shadow: 0 20px 40px rgba(15, 23, 42, 0.25);
+            z-index: 2; border: none;
+        }
+        .card-box.featured h3, .card-box.featured p { color: white; }
+        .card-box.featured .price { color: var(--accent); }
+
+        .price { font-size: 3rem; font-weight: 800; color: var(--primary); margin: 20px 0; }
+        .price span { font-size: 1rem; font-weight: 500; opacity: 0.7; }
+
+        .features-list { list-style: none; margin-top: 20px; }
+        .features-list li { margin-bottom: 12px; display: flex; align-items: center; gap: 10px; font-size: 0.95rem; }
+
+        /* --- VIP SECTION --- */
+        .vip-section { padding: 100px 5%; }
+        .vip-container {
+            background: white; border-radius: 30px; overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.05);
+            display: grid; grid-template-columns: 1fr 1fr;
+        }
+        .vip-content { padding: 60px; display: flex; flex-direction: column; justify-content: center; }
+        .vip-tag { 
+            background: var(--primary); color: var(--gold); 
+            padding: 5px 15px; border-radius: 20px; 
+            font-size: 0.8rem; font-weight: 700; width: fit-content; margin-bottom: 20px;
+        }
+
+        /* --- FOOTER --- */
+        footer { background: var(--primary); color: white; padding: 60px 5%; margin-top: 50px; }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            header { padding: 15px 5%; }
+            nav ul { display: none; }
+            .hero { grid-template-columns: 1fr; text-align: center; padding-top: 120px; }
+            .hero-text h1 { font-size: 2.8rem; }
+            .btn-group { justify-content: center; }
+            .hero-visual { display: none; }
+            .vip-container { grid-template-columns: 1fr; }
+            .card-box.featured { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#">
+            <img src="assets/img/logo-ecuashop.png" alt="Ecuashop" style="height: 80px; width: auto;">
+        </a>
+        
+        <nav>
+            <ul>
+                <li><a href="#como-funciona">Cómo Funciona</a></li>
+                <li><a href="#tarifas">Tarifas</a></li>
+                <li><a href="#vip" class="nav-vip">VIP <i class="fas fa-crown" style="font-size:0.8rem;"></i></a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-text" data-aos="fade-right">
+            <div style="color: var(--accent); font-weight: 700; margin-bottom: 15px; letter-spacing: 2px;">
+                EN VIVO DESDE USA 🇺🇸
+            </div>
+            <h1>Las mejores ofertas del mundo, <span style="color: var(--accent);">ahora en tu casa.</span></h1>
+            <p>Accede a precios de Outlet en tiempo real. Compra en nuestros Lives de TikTok y nosotros lo llevamos a Ecuador o Colombia.</p>
+            
+            <div class="btn-group">
+                <a href="https://wa.me/593999999999?text=Hola%20quiero%20mi%20codigo" class="btn-primary">
+                    <i class="fas fa-lock"></i> Obtener Código ($50)
+                </a>
+                <a href="#como-funciona" class="btn-outline">
+                    <i class="fas fa-play-circle"></i> ¿Cómo funciona?
+                </a>
+            </div>
+        </div>
+
+        <div class="hero-visual" data-aos="fade-left">
+            <img src="assets/img/hero-principal.jpg" alt="Compras Masivas USA" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px; box-shadow: -20px 20px 60px rgba(0,0,0,0.15);">
+            
+            <div class="floating-badge">
+                <div style="background:var(--accent); width:40px; height:40px; border-radius:50%; display:grid; place-items:center; color:white;">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <div>
+                    <div style="font-weight:700; font-size:1.1rem;">Envios Rápidos</div>
+                    <div style="font-size:0.8rem; color:var(--text-grey);">7-8 Días Hábiles</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="brand-carousel-section">
+        <div class="carousel-header" data-aos="fade-up">
+            <span style="background: var(--bg); color: var(--accent); padding: 5px 15px; border-radius: 20px; font-weight: 700; font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase;">Acceso Ilimitado</span>
+            <h3 style="font-size: 2rem; margin-top: 15px; color: var(--primary);">Visitamos todas las tiendas de USA 🇺🇸</h3>
+            <p style="color: var(--text-grey); margin-top: 10px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                Si existe en Estados Unidos, nosotros vamos por ello.
+            </p>
+        </div>
+
+        <div class="logo-track">
+            <img src="assets/img/logos/adidas.png" class="brand-logo" alt="Adidas">
+            <img src="assets/img/logos/amazon.png" class="brand-logo" alt="Amazon">
+            <img src="assets/img/logos/burlington.png" class="brand-logo" alt="Burlington">
+            <img src="assets/img/logos/costco.png" class="brand-logo" alt="Costco">
+            <img src="assets/img/logos/guess.png" class="brand-logo" alt="Guess">
+            <img src="assets/img/logos/karl.png" class="brand-logo" alt="Karl Lagerfeld">
+            <img src="assets/img/logos/nike.png" class="brand-logo" alt="Nike">
+            <img src="assets/img/logos/primark.png" class="brand-logo" alt="Primark">
+            <img src="assets/img/logos/reebok.png" class="brand-logo" alt="Reebok">
+            <img src="assets/img/logos/sephora.png" class="brand-logo" alt="Sephora">
+            <img src="assets/img/logos/shein.png" class="brand-logo" alt="Shein">
+            <img src="assets/img/logos/target.png" class="brand-logo" alt="Target">
+            <img src="assets/img/logos/tjmaxx.png" class="brand-logo" alt="TJ Maxx">
+            <img src="assets/img/logos/walmart.png" class="brand-logo" alt="Walmart">
+            
+            <img src="assets/img/logos/adidas.png" class="brand-logo" alt="Adidas">
+            <img src="assets/img/logos/amazon.png" class="brand-logo" alt="Amazon">
+            <img src="assets/img/logos/burlington.png" class="brand-logo" alt="Burlington">
+            <img src="assets/img/logos/costco.png" class="brand-logo" alt="Costco">
+            <img src="assets/img/logos/guess.png" class="brand-logo" alt="Guess">
+            <img src="assets/img/logos/karl.png" class="brand-logo" alt="Karl Lagerfeld">
+            <img src="assets/img/logos/nike.png" class="brand-logo" alt="Nike">
+            <img src="assets/img/logos/primark.png" class="brand-logo" alt="Primark">
+            <img src="assets/img/logos/reebok.png" class="brand-logo" alt="Reebok">
+            <img src="assets/img/logos/sephora.png" class="brand-logo" alt="Sephora">
+            <img src="assets/img/logos/shein.png" class="brand-logo" alt="Shein">
+            <img src="assets/img/logos/target.png" class="brand-logo" alt="Target">
+            <img src="assets/img/logos/tjmaxx.png" class="brand-logo" alt="TJ Maxx">
+            <img src="assets/img/logos/walmart.png" class="brand-logo" alt="Walmart">
+        </div>
+    </section>
+
+    <section id="como-funciona" class="section-std">
+        <div class="section-header" data-aos="fade-up">
+            <h2>Compra masiva, simple.</h2>
+            <p>Hemos simplificado la importación para que solo te preocupes por elegir lo que te gusta.</p>
+        </div>
+        
+        <div class="pricing-grid">
+            <div class="card-box" data-aos="fade-up">
+                <i class="fas fa-ticket-alt fa-2x" style="color:var(--accent); margin-bottom:20px;"></i>
+                <h3>1. Pide tu Código</h3>
+                <p style="color:var(--text-grey); margin-top:10px;">Abona $50 (100% consumibles) para tener tu casillero virtual y entrar al grupo VIP.</p>
+            </div>
+            <div class="card-box" data-aos="fade-up" data-aos-delay="100">
+                <i class="fas fa-video fa-2x" style="color:var(--accent); margin-bottom:20px;"></i>
+                <h3>2. Compra en Vivo</h3>
+                <p style="color:var(--text-grey); margin-top:10px;">En los Lives de TikTok, si ves algo, escribe tu código. ¡Es tuyo!</p>
+            </div>
+            <div class="card-box" data-aos="fade-up" data-aos-delay="200">
+                <i class="fas fa-box-open fa-2x" style="color:var(--accent); margin-bottom:20px;"></i>
+                <h3>3. Consolidación</h3>
+                <p style="color:var(--text-grey); margin-top:10px;">Esperamos a que tengas 8 Lbs para enviar. Así ahorras dinero en el flete.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="tarifas" class="section-std">
+        <div class="section-header" data-aos="fade-up">
+            <h2>Tarifas Transparentes</h2>
+            <p>Sin sorpresas. Sabes exactamente cuánto pagas por traer tus productos.</p>
+        </div>
+
+        <div class="pricing-grid">
+            <div class="card-box featured" data-aos="zoom-in">
+                <div style="background:rgba(255,255,255,0.2); width:fit-content; padding:5px 10px; border-radius:5px; font-size:0.8rem; margin-bottom:10px;">MÁS POPULAR</div>
+                <h3>Categoría B (4x4)</h3>
+                <div class="price">$5.00 <span>/lb</span></div>
+                <p>Solo Flete</p>
+                <ul class="features-list">
+                    <li><i class="fas fa-check"></i> Hasta 4 Kilos (8.8 Lbs)</li>
+                    <li><i class="fas fa-check"></i> Hasta $400 en valor</li>
+                    <li><i class="fas fa-check"></i> <strong>Tiempo: 7-8 Días</strong></li>
+                    <li style="margin-top: 15px; padding: 12px; background: rgba(239, 68, 68, 0.25); border-radius: 8px; color: #fca5a5; font-weight: 600;">
+                        <i class="fas fa-times-circle" style="color: #ef4444; margin-right: 5px;"></i> Arancel NO INCLUIDO
+                    </li>
+                </ul>
+            </div>
+
+            <div class="card-box" data-aos="zoom-in" data-aos-delay="100">
+                <h3>Categoría G (Familiar)</h3>
+                <div class="price">$5.00 <span>/lb</span></div>
+                <p>Para ropa y calzado vario</p>
+                <ul class="features-list">
+                    <li><i class="fas fa-check"></i> Sin límite de peso</li>
+                    <li><i class="fas fa-check"></i> Entrega a domicilio</li>
+                    <li><i class="fas fa-check"></i> <strong>Mínimo despacho: 8 Lbs</strong></li>
+                </ul>
+            </div>
+
+            <div class="card-box" style="border-color: var(--accent);" data-aos="zoom-in" data-aos-delay="200">
+                <h3 style="color:var(--accent);">⚠️ Regla de Oro</h3>
+                <div class="price" style="font-size: 2rem;">Min. 8 Libras</div>
+                <p>No enviamos paquetes sueltos. Agrupamos tus compras para que el costo de envío por prenda sea mínimo.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="vip" class="vip-section">
+        <div class="vip-container">
+            <img src="assets/img/vip-experience.jpg" alt="Personal Shopper Exclusivo" style="width: 100%; height: 100%; object-fit: cover;">
+            
+            <div class="vip-content" data-aos="fade-left">
+                <div class="vip-tag"><i class="fas fa-crown"></i> SERVICIO PREMIUM</div>
+                <h2 style="font-size:2.5rem; margin-bottom:20px;">Personal Shopper VIP</h2>
+                <p style="color:var(--text-grey); margin-bottom:20px; font-size:1.1rem;">
+                    ¿Buscas algo muy específico? Alquila tu propio asesor de compras por horas.
+                </p>
+                <ul class="features-list" style="margin-bottom:30px;">
+                    <li><i class="fas fa-star" style="color:var(--gold);"></i> Videollamada privada 1 a 1.</li>
+                    <li><i class="fas fa-star" style="color:var(--gold);"></i> Recorremos tiendas de lujo por ti.</li>
+                    <li><i class="fas fa-star" style="color:var(--gold);"></i> Tarifa: <strong>$30 USD / Hora</strong>.</li>
+                </ul>
+                <a href="agendar-vip.html" class="btn-vip">
+                    <i class="far fa-calendar-alt"></i> 📅 Agendar Cita VIP
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:30px;">
+            <div>
+                <h3 style="margin-bottom: 10px;">ECUASHOP</h3>
+                <p style="opacity:0.7; max-width:300px;">Conectando USA con Ecuador y Colombia a través de ofertas diarias.</p>
+            </div>
+            <div>
+                <h4 style="margin-bottom: 10px;">Contacto</h4>
+                <p style="opacity:0.7;">Whatsapp: +593 99 999 9999</p>
+                <p style="opacity:0.7;">Email: contacto@ecuashop.com</p>
+            </div>
+        </div>
+        <div style="margin-top:50px; border-top:1px solid rgba(255,255,255,0.1); padding-top:20px; font-size:0.8rem; text-align:center; opacity:0.5;">
+            © 2024 Ecuashop Inc. Todos los derechos reservados.
+        </div>
+    </footer>
+
+    <a href="https://wa.me/593999999999" style="position:fixed; bottom:30px; right:30px; background:#25D366; color:white; width:65px; height:65px; border-radius:50%; display:grid; place-items:center; font-size:32px; z-index:9999; box-shadow:0 10px 25px rgba(37,211,102,0.4); transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800, offset: 100, once: true });
+    </script>
+</body>
+</html>
